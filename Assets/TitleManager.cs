@@ -26,6 +26,8 @@ public class TitleManager : MonoBehaviour
         }
 
         UserProfile.CreateTable(dbPath);
+        UserLogin.CreateTable(dbPath);
+        MasterLoginItem.CreateTable(dbPath);
     }
 
 
@@ -41,14 +43,22 @@ public class TitleManager : MonoBehaviour
 
     public void LoginButtonEvent()
     {
-        Action action = () =>
+        userProfileModel = UserProfile.Get(dbPath);
+        if (string.IsNullOrEmpty(userProfileModel.user_id))
         {
-            userProfileModel = UserProfile.Get(dbPath);
-            if (!string.IsNullOrEmpty(userProfileModel.user_id))
+            Action action = () =>
             {
-                userID.text = "ID : " + userProfileModel.user_id;
-            }
-        };
-        StartCoroutine(CommunicationManager.ConnectServer("registration", "", action));
+                Debug.Log("登録完了しました");
+            };
+            StartCoroutine(CommunicationManager.ConnectServer("registration", "", action));
+        }
+        else
+        {
+            Action action = () =>
+            {
+                //ログイン後の処理
+            };
+            StartCoroutine(CommunicationManager.ConnectServer("login", "&user_id=" + userProfileModel.user_id, action));
+        }
     }
 }

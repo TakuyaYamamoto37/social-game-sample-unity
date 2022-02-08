@@ -8,9 +8,10 @@ using System.Linq;
 [Serializable]
 public class ResponseObjects
 {
-    public UserProfileModel user_profile;
     public int master_data_version;
-//    public MasterLoginItemModel[] master_login_item;
+    public UserProfileModel user_profile;
+    public UserLoginModel user_login;
+    public MasterLoginItemModel[] master_login_item;
 }
 
 public class CommunicationManager : MonoBehaviour
@@ -18,6 +19,7 @@ public class CommunicationManager : MonoBehaviour
     const string URL = "http://192.168.3.16:8000/";
     private const string ERROR_MASTER_DATA_UPDATE = "1";
     private const string ERROR_DB_UPDATE = "2";
+    private const string ERROR_INVALID_DATA = "3";
 
 
     public static IEnumerator ConnectServer(string endpoint, string paramater, Action action = null)
@@ -59,16 +61,24 @@ public class CommunicationManager : MonoBehaviour
 
                     responseObjects = JsonUtility.FromJson<ResponseObjects>(masterText);
 
+                    //MasterLginItemをSQLiteへ保存
+                    if (responseObjects.master_login_item != null)
+                    {
+                        MasterLoginItem.Set(responseObjects.master_login_item);
+                    }
+
                     /*
                     //マスターデータのバージョンはローカルに保存
                     PlayerPrefs.SetInt("master_data_version", responseObjects.master_data_version);
-
-                    //MasterLginItemをSQLiteへ保存チャプター５参考
-         //           MasterLoginItem.set(responseObjects.master_data_version);
                     */
+
                     break;
                 case ERROR_DB_UPDATE:
                     Debug.LogError("サーバーでエラーが発生しました。[データベース更新エラー]");
+                    break;
+
+                case ERROR_INVALID_DATA:
+                    Debug.LogError("サーバーでエラーが発生しました。[不正なデータ]");
                     break;
                 default:
                     break;
@@ -84,6 +94,11 @@ public class CommunicationManager : MonoBehaviour
         if (!string.IsNullOrEmpty(responseObjects.user_profile.user_id))
         {
             UserProfile.Set(responseObjects.user_profile);
+        }
+
+        if (!string.IsNullOrEmpty(responseObjects.user_login.user_id))
+        {
+            UserLogin.Set(responseObjects.user_login);
         }
 
         if (action != null)
