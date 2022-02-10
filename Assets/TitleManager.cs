@@ -12,29 +12,16 @@ public class TitleManager : MonoBehaviour
 
     private UserProfileModel userProfileModel;
 
-    string dbPath;
-
     void Awake()
     {
-        //string DBPath = Application.persistentDataPath + "/Service.db";
-        //string DBPath = Application.dataPath + "/StreamingAssets/Service.db";
-        this.dbPath = Application.dataPath + "/Service.db";
-
-        if (!File.Exists(dbPath))
-        {
-            File.Create(dbPath);
-        }
-
-        UserProfile.CreateTable(dbPath);
-        UserLogin.CreateTable(dbPath);
-        MasterLoginItem.CreateTable(dbPath);
+        Sqlite.CreateTable();
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        userProfileModel = UserProfile.Get(dbPath);
+        userProfileModel = UserProfile.Get();
         if (!string.IsNullOrEmpty(userProfileModel.user_id))
         {
             userID.text = "ID : " + userProfileModel.user_id;
@@ -43,7 +30,7 @@ public class TitleManager : MonoBehaviour
 
     public void LoginButtonEvent()
     {
-        userProfileModel = UserProfile.Get(dbPath);
+        userProfileModel = UserProfile.Get();
         if (string.IsNullOrEmpty(userProfileModel.user_id))
         {
             Action action = () =>

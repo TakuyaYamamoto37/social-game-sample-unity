@@ -17,7 +17,10 @@ public class UserProfileModel
 
  public static class UserProfile
  {
-
+    public const int TUTORIAL_START = 0;
+    public const int TUTORIAL_QUEST = 10;
+    public const int TUTORIAL_GACHA = 20;
+    public const int TUTORIAL_FINISH = 999;
 
     public static void CreateTable(string dbPath)
      {
@@ -33,10 +36,10 @@ public class UserProfileModel
         sqlDB.ExecuteQuery(query);
     }
 
-    public static UserProfileModel Get(string dbPath)
+    public static UserProfileModel Get()
     {
         string query = "select * from user_profile;";
-        SqliteDatabase sqlDB = new SqliteDatabase(dbPath);
+        SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
         DataTable dataTable = sqlDB.ExecuteQuery(query);
         UserProfileModel userProfileModel = new UserProfileModel();
 
@@ -51,22 +54,5 @@ public class UserProfileModel
         }
         return userProfileModel;
     }
-
-    /*
-    public static UserProfileModel Get(string dbPath, string user_id)
-    {
-        string query = string.Format("select * from user_profile where user_id = \'{0}\';", user_id);
-        Debug.Log(query);
-        SqliteDatabase sqlDB = new SqliteDatabase(dbPath);
-        DataTable dataTable = sqlDB.ExecuteQuery(query);
-        UserProfileModel userProfileModel = new UserProfileModel();
-        
-        foreach (DataRow dr in dataTable.Rows)
-        {
-            userProfileModel.user_id = dr["user_id"].ToString();
-            userProfileModel.user_name = dr["user_name"].ToString();
-        }
-        return userProfileModel;
-    }*/
 }
 
