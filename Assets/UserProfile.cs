@@ -22,10 +22,10 @@ public class UserProfileModel
     public const int TUTORIAL_GACHA = 20;
     public const int TUTORIAL_FINISH = 999;
 
-    public static void CreateTable(string dbPath)
+    public static void CreateTable()
      {
          string query = "create table if not exists user_profile (user_id text, user_name text, crystal int, crystal_free int, friend_coin int, tutorial_progress int, primary key (user_id));";
-         SqliteDatabase sqlDB = new SqliteDatabase(dbPath);
+         SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
          sqlDB.ExecuteQuery(query);
      }
 

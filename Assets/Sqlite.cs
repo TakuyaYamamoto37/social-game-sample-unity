@@ -14,8 +14,10 @@ public static class Sqlite
             File.Create(sqliteDBpath);
         }
 
-        UserProfile.CreateTable(sqliteDBpath);
-        UserLogin.CreateTable(sqliteDBpath);
-        MasterLoginItem.CreateTable(sqliteDBpath);
+        UserProfile.CreateTable();
+        UserLogin.CreateTable();
+        MasterLoginItem.CreateTable();
+        MasterQuest.CreateTable();
+        UserQuest.CreateTable();
     }
 }

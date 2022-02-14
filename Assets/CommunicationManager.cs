@@ -12,6 +12,8 @@ public class ResponseObjects
     public UserProfileModel user_profile;
     public UserLoginModel user_login;
     public MasterLoginItemModel[] master_login_item;
+    public MasterQuestModel[] master_quest;
+    public UserQuestModel[] user_quest;
 }
 
 public class CommunicationManager : MonoBehaviour
@@ -20,6 +22,7 @@ public class CommunicationManager : MonoBehaviour
     private const string ERROR_MASTER_DATA_UPDATE = "1";
     private const string ERROR_DB_UPDATE = "2";
     private const string ERROR_INVALID_DATA = "3";
+    private const string ERROR_INVALID_SCHEDULE = "4";
 
 
     public static IEnumerator ConnectServer(string endpoint, string paramater, Action action = null)
@@ -27,9 +30,6 @@ public class CommunicationManager : MonoBehaviour
         int masterDataVersion = 22;
 
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(URL + endpoint + "?client_master_version=" + masterDataVersion + paramater);
-
-        /*
-        UnityWebRequest unityWebRequest = UnityWebRequest.Get("http://192.168.3.16:8000/name?client_master_version=21&user_id=4b3403665fea6&user_name=em_connect");*/
 
         yield return unityWebRequest.SendWebRequest();
 
@@ -51,6 +51,7 @@ public class CommunicationManager : MonoBehaviour
             switch (text)
             {
                 case ERROR_MASTER_DATA_UPDATE:
+                    Debug.Log("マスターデータが古いため更新します。");
                     UnityWebRequest masterDataRequest = UnityWebRequest.Get("http://192.168.3.16:8000/master_data");
                     yield return masterDataRequest.SendWebRequest();
 
@@ -67,6 +68,12 @@ public class CommunicationManager : MonoBehaviour
                         MasterLoginItem.Set(responseObjects.master_login_item);
                     }
 
+                    //MasterQuestをSQLiteへ保存
+                    if (responseObjects.master_quest != null)
+                    {
+                        MasterQuest.Set(responseObjects.master_quest);
+                    }
+
                     /*
                     //マスターデータのバージョンはローカルに保存
                     PlayerPrefs.SetInt("master_data_version", responseObjects.master_data_version);
@@ -80,6 +87,11 @@ public class CommunicationManager : MonoBehaviour
                 case ERROR_INVALID_DATA:
                     Debug.LogError("サーバーでエラーが発生しました。[不正なデータ]");
                     break;
+
+                case ERROR_INVALID_SCHEDULE:
+                    Debug.LogError("サーバーでエラーが発生しました。[期間外]");
+                        break;
+
                 default:
                     break;
             }
@@ -90,7 +102,7 @@ public class CommunicationManager : MonoBehaviour
         }
 
 
-        //UserProfileをSQLiteへ保存
+        //SQLiteへ保存
         if (!string.IsNullOrEmpty(responseObjects.user_profile.user_id))
         {
             UserProfile.Set(responseObjects.user_profile);
@@ -99,6 +111,10 @@ public class CommunicationManager : MonoBehaviour
         if (!string.IsNullOrEmpty(responseObjects.user_login.user_id))
         {
             UserLogin.Set(responseObjects.user_login);
+        }
+        if (responseObjects.user_quest != null)
+        {
+            UserQuest.Set(responseObjects.user_quest);
         }
 
         if (action != null)
