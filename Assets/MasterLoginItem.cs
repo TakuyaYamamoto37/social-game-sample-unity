@@ -20,10 +20,10 @@ public static class MasterLoginItem
         FriendCoin = 3,
     }
 
-    public static void CreateTable(string dbPath)
+    public static void CreateTable()
     {
         string query = "create table if not exists master_login_item (login_day int, item_type int, item_count int, primary key(login_day));";
-        SqliteDatabase sqlDB = new SqliteDatabase(dbPath);
+        SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
         sqlDB.ExecuteQuery(query);
     }
 

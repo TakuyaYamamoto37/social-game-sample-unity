@@ -12,10 +12,10 @@ public class UserLoginModel
 
 public static class UserLogin
 {
-    public static void CreateTable(string dbPath)
+    public static void CreateTable()
     {
         string query = "create table if not exists user_login (user_id text, login_day int, last_login_at text, primary key(user_id));";
-        SqliteDatabase sqlDB = new SqliteDatabase(dbPath);
+        SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
         sqlDB.ExecuteQuery(query);
     }
 
