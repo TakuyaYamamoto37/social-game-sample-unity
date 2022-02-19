@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class CharacterManager : MonoBehaviour
 
     [SerializeField]
     GameObject characterItemPrefab;
+
+    [SerializeField]
+    public GameObject Dialog;
+
+    [SerializeField]
+    public Text DialogSellPoint;
 
     private int contentsCount = 3;
     private float contentsWidth = 210.0f;
