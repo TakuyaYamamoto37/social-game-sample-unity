@@ -14,10 +14,13 @@ public static class Sqlite
             File.Create(sqliteDBpath);
         }
 
+        MasterDataVersion.CreateTable();
         UserProfile.CreateTable();
         UserLogin.CreateTable();
         MasterLoginItem.CreateTable();
         MasterQuest.CreateTable();
         UserQuest.CreateTable();
+        MasterCharacter.CreateTable();
+        UserCharacter.CreateTable();
     }
 }
