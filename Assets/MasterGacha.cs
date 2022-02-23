@@ -13,7 +13,7 @@ public class MasterGachaModel
     public int draw_count;
     public string open_at;
     public string close_at;
-    public string desctiption;
+    public string description;
 }
 public static class MasterGacha
 {
@@ -36,8 +36,30 @@ public static class MasterGacha
         SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
         foreach (MasterGachaModel masterGachaModel in master_gacha_model_list)
         {
-            string query = string.Format("insert or replace into master_gacha(gacha_id, banner_id, cost_type, cost_amount, draw_count, open_at,close_at, description) values(\'{0}\', \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\');", masterGachaModel.gacha_id, masterGachaModel.banner_id, masterGachaModel.cost_type, masterGachaModel.cost_amount, masterGachaModel.draw_count, masterGachaModel.open_at, masterGachaModel.close_at, masterGachaModel.desctiption);
+            string query = string.Format("insert or replace into master_gacha(gacha_id, banner_id, cost_type, cost_amount, draw_count, open_at,close_at, description) values(\'{0}\', \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\');", masterGachaModel.gacha_id, masterGachaModel.banner_id, masterGachaModel.cost_type, masterGachaModel.cost_amount, masterGachaModel.draw_count, masterGachaModel.open_at, masterGachaModel.close_at, masterGachaModel.description);
             sqlDB.ExecuteNonQuery(query);
         }
+    }
+
+    public static Dictionary<int, MasterGachaModel> GetMasterGachaList()
+    {
+        Dictionary<int, MasterGachaModel> masterGachaListModel = new Dictionary<int, MasterGachaModel>();
+        string query = "select * from master_gacha;";
+        SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
+        DataTable dataTable = sqlDB.ExecuteQuery(query);
+        foreach (DataRow dr in dataTable.Rows)
+        {
+            MasterGachaModel masterGachaModel = new MasterGachaModel();
+            masterGachaModel.gacha_id = int.Parse(dr["gacha_id"].ToString());
+            masterGachaModel.banner_id = dr["banner_id"].ToString();
+            masterGachaModel.cost_type = int.Parse(dr["cost_type"].ToString());
+            masterGachaModel.cost_amount = int.Parse(dr["cost_amount"].ToString());
+            masterGachaModel.draw_count = int.Parse(dr["draw_count"].ToString());
+            masterGachaModel.open_at = dr["open_at"].ToString();
+            masterGachaModel.close_at = dr["close_at"].ToString();
+            masterGachaModel.description = dr["description"].ToString();
+            masterGachaListModel.Add(masterGachaModel.gacha_id, masterGachaModel);
+        }
+        return masterGachaListModel;
     }
 }
