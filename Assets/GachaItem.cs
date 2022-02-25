@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,6 +64,17 @@ public class GachaItem : MonoBehaviour
     //ガチャをひくボタンをタップで呼ばれる関数
     public void PressEvent()
     {
-        //
+        Action action = () =>
+        {
+            //レスポンス後の処理
+        };
+
+        UserProfileModel userProfileModel = UserProfile.Get();
+        if (string.IsNullOrEmpty(userProfileModel.user_id))
+        {
+            Debug.LogError("TitleSceneを起動してユーザー登録を行ってください。");
+            return;
+        }
+        StartCoroutine(CommunicationManager.ConnectServer("gacha", "&user_id=" + userProfileModel.user_id + "&gacha_id=" + masterGachaModel.gacha_id, action));
     }
 }
