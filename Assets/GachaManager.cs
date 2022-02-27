@@ -13,12 +13,16 @@ public class GachaManager : MonoBehaviour
     [SerializeField]
     GameObject gachaItemPrefab;
 
+    [SerializeField]
+    public GameObject GachaResult;
+
     private float contentsWidth = 400.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         gachaItemPrefab.SetActive(false);
+        GachaResult.SetActive(false);
 
         Dictionary<int, MasterGachaModel> masterGachaModelList = MasterGacha.GetMasterGachaList();
         if (masterGachaModelList.Count == 0)

@@ -50,4 +50,21 @@ public class UserCharacter
 
         return userCharacterListModel;
     }
+
+    public static UserCharacterModel GetLatestUserCharacter()
+    {
+        UserCharacterModel userCharacterModel = new UserCharacterModel();
+
+        string query = "select * from user_character order by id desc;";
+        SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
+        DataTable dataTable = sqlDB.ExecuteQuery(query);
+        foreach (DataRow dr in dataTable.Rows)
+        {
+            userCharacterModel.id = int.Parse(dr["id"].ToString());
+            userCharacterModel.character_id = int.Parse(dr["character_id"].ToString());
+            return userCharacterModel;
+        }
+
+        return null;
+    }
 }

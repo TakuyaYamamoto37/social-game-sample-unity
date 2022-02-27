@@ -67,6 +67,20 @@ public class GachaItem : MonoBehaviour
         Action action = () =>
         {
             //レスポンス後の処理
+            GameObject gachaManagerObject = GameObject.Find("GachaManager");
+            if (gachaManagerObject == null)
+            {
+                Debug.LogError("GachaManagerが存在しません");
+                return;
+            }
+            GachaManager gachaManager = gachaManagerObject.GetComponent<GachaManager>();
+            if (gachaManager == null)
+            {
+                Debug.LogError("gachaManagerがアタッチされていません。");
+                return;
+            }
+            gachaManager.GachaList.SetActive(false);
+            gachaManager.GachaResult.SetActive(true);
         };
 
         UserProfileModel userProfileModel = UserProfile.Get();

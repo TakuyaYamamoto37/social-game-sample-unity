@@ -683,6 +683,7 @@ MonoBehaviour:
   GachaList: {fileID: 2019283264}
   contents: {fileID: 1880917612}
   gachaItemPrefab: {fileID: 1876872410}
+  GachaResult: {fileID: 1727399366}
 --- !u!4 &689772611
 Transform:
   m_ObjectHideFlags: 0
@@ -1635,9 +1636,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1727399366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4263694850d545e6b1fd7ecd5717d60, type: 3}
+  m_Script: {fileID: 11500000, guid: af25423eb9128dd48b705d14573cdfb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterNameLabel: {fileID: 500484650}
+  typeAsset: {fileID: 352266395}
+  rarity1: {fileID: 1235544081}
+  rarity2: {fileID: 1024878777}
+  rarity3: {fileID: 2102237964}
+  characterAsset: {fileID: 1881251917}
+  userCharacterModel:
+    id: 0
+    character_id: 0
 --- !u!1 &1820112711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,7 +1816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 300.00003, y: 0}
+  m_AnchoredPosition: {x: 300.0115, y: 0}
   m_SizeDelta: {x: -900, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1881251915
@@ -2311,7 +2321,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 389645604}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999803
+  m_Size: 0.9958775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
