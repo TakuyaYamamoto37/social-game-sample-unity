@@ -22,5 +22,6 @@ public static class Sqlite
         UserQuest.CreateTable();
         MasterCharacter.CreateTable();
         UserCharacter.CreateTable();
+        MasterGacha.CreateTable();
     }
 }

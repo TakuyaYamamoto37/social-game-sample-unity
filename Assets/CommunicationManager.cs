@@ -16,6 +16,7 @@ public class ResponseObjects
     public UserQuestModel[] user_quest;
     public MasterCharacterModel[] master_character;
     public UserCharacterModel[] user_character;
+    public MasterGachaModel[] master_gacha;
 }
 
 public class CommunicationManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class CommunicationManager : MonoBehaviour
     private const string ERROR_DB_UPDATE = "2";
     private const string ERROR_INVALID_DATA = "3";
     private const string ERROR_INVALID_SCHEDULE = "4";
+    private const string ERROR_COST_SHORTAGE = "5";
 
 
     public static IEnumerator ConnectServer(string endpoint, string paramater, Action action = null)
@@ -83,6 +85,11 @@ public class CommunicationManager : MonoBehaviour
                         MasterCharacter.Set(responseObjects.master_character);
                     }
 
+                    if (responseObjects.master_gacha != null)
+                    {
+                        MasterGacha.Set(responseObjects.master_gacha);
+                    }
+
                     Debug.Log("マスターデータの更新が完了しました。");
                     /*
                     //マスターデータのバージョンはローカルに保存
@@ -101,6 +108,10 @@ public class CommunicationManager : MonoBehaviour
                 case ERROR_INVALID_SCHEDULE:
                     Debug.LogError("サーバーでエラーが発生しました。[期間外]");
                         break;
+
+                case ERROR_COST_SHORTAGE:
+                    Debug.LogError("サーバーでエラーが発生しました。[通貨不足]");
+                    break;
 
                 default:
                     break;
