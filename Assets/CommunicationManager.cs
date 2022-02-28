@@ -21,7 +21,7 @@ public class ResponseObjects
 
 public class CommunicationManager : MonoBehaviour
 {
-    public const string URL = "http://192.168.3.16:8000/";
+    public const string URL = "http://192.168.3.100:8000/";
     private const string ERROR_MASTER_DATA_UPDATE = "1";
     private const string ERROR_DB_UPDATE = "2";
     private const string ERROR_INVALID_DATA = "3";
