@@ -24,5 +24,6 @@ public static class Sqlite
         UserCharacter.CreateTable();
         MasterGacha.CreateTable();
         MasterShop.CreateTable();
+        UserPresent.CreateTable();
     }
 }

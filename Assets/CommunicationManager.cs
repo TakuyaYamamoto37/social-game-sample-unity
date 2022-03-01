@@ -18,6 +18,7 @@ public class ResponseObjects
     public UserCharacterModel[] user_character;
     public MasterGachaModel[] master_gacha;
     public MasterShopModel[] master_shop;
+    public UserPresentModel[] user_present;
 }
 
 public class CommunicationManager : MonoBehaviour
@@ -144,6 +145,11 @@ public class CommunicationManager : MonoBehaviour
                 if (responseObjects.user_character != null)
                 {
                     UserCharacter.Set(responseObjects.user_character);
+                }
+
+                if (responseObjects.user_present != null)
+                {
+                    UserPresent.Set(responseObjects.user_present);
                 }
 
                 if (action != null)
