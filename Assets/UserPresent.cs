@@ -15,6 +15,13 @@ public class UserPresentModel
 
 public class UserPresent
 {
+    public enum ItemType
+    {
+        Crystal = 1,
+        CrystalFree = 2,
+        FriendCoin = 3,
+    }
+
     public static void CreateTable()
     {
         string query = "create table if not exists user_present(present_id int, item_type int, item_count int, description text, limited_at text, primary key(present_id));";
@@ -35,7 +42,26 @@ public class UserPresent
         {
             string query = string.Format("insert or replace into user_present(present_id, item_type, item_count, description, limited_at) values (\'{0}\', \'{1}\', \'{2}\', \'{3}\', \'{4}\');", userPresentModel.present_id, userPresentModel.item_type, userPresentModel.item_count, userPresentModel.description, userPresentModel.limited_at);
             sqlDB.ExecuteNonQuery(query);
+        } 
+    }
+
+    public static Dictionary<int, UserPresentModel> GetUserPresentList()
+    {
+        Dictionary<int, UserPresentModel> userPresentListModel = new Dictionary<int, UserPresentModel>();
+        string query = "select * from user_present;";
+        SqliteDatabase sqlDB = new SqliteDatabase(Sqlite.sqliteDBpath);
+        DataTable dataTable = sqlDB.ExecuteQuery(query);
+
+        foreach (DataRow dr in dataTable.Rows)
+        {
+            UserPresentModel userPresentModel = new UserPresentModel();
+            userPresentModel.present_id = int.Parse(dr["present_id"].ToString());
+            userPresentModel.item_type = int.Parse(dr["item_type"].ToString());
+            userPresentModel.item_count = int.Parse(dr["item_count"].ToString());
+            userPresentModel.description = dr["description"].ToString();
+            userPresentModel.limited_at = dr["limited_at"].ToString();
+            userPresentListModel.Add(userPresentModel.present_id, userPresentModel);
         }
-        
+        return userPresentListModel;
     }
 }
