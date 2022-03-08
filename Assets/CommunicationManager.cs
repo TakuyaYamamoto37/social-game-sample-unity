@@ -19,6 +19,7 @@ public class ResponseObjects
     public MasterGachaModel[] master_gacha;
     public MasterShopModel[] master_shop;
     public UserPresentModel[] user_present;
+    public MasterTextModel[] master_text;
 }
 
 public class CommunicationManager : MonoBehaviour
@@ -95,6 +96,11 @@ public class CommunicationManager : MonoBehaviour
                     if (responseObjects.master_shop != null)
                     {
                         MasterShop.Set(responseObjects.master_shop);
+                    }
+
+                    if (responseObjects.master_text != null)
+                    {
+                        MasterText.Set(responseObjects.master_text);
                     }
 
                     Debug.Log("マスターデータの更新が完了しました。");
